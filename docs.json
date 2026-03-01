@@ -4,8 +4,8 @@
   "name": "Apyx",
   "description": "Technical architecture and how Apyx works",
   "colors": {
-    "primary": "#ccfc7e",
-    "light": "#a8df49",
+    "primary": "#A8DF49",
+    "light": "#A8DF49",
     "dark": "#b8e66e"
   },
   "background": {
