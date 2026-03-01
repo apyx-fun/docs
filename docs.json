@@ -31,7 +31,11 @@
   },
   "navbar": {
     "links": [],
-    "primary": null
+    "primary": {
+      "type": "button",
+      "label": "App",
+      "href": "#"
+    }
   },
   "footer": {
     "socials": {}
