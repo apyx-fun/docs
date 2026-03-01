@@ -1,39 +1,53 @@
 ---
-title: "Introduction"
-description: "What Apyx is and why it exists"
+title: "Overview"
+description: "Apyx — memecoin launchpad with permissionless duels and mercy"
 ---
 
 ## What is Apyx?
 
-Apyx is a **permissionless token launch layer** on Solana. Tokens launch on bonding curves (Pump-style). When two tokens land in the same market-cap band and time window, they **duel**: first to reach a target market cap triggers resolution; the **higher market cap wins**. The loser’s SOL (minus a protocol fee) moves to the winner’s curve and is converted into winner tokens for a **mercy vault**. Loser-token holders can **claim mercy**—send loser tokens in, receive winner tokens pro-rata. So value is reallocated to the winner instead of being wiped.
+Apyx is a **memecoin launchpad** on Solana. You launch and trade tokens on **bonding curves**. Here’s the twist: tokens **automatically and permissionlessly** enter **duels** with other tokens in the same **bucket** and **window**. When a duel resolves, the **two coins effectively merge into the winner**.
+
+- The **winner** gets a boost: the **loser’s SOL liquidity** (from the loser’s bonding curve) is moved to the winner’s curve.
+- That SOL is used to **buy winner tokens** and put them in a **mercy vault**. Those are **mercy tokens** — available **only** to holders of the token that **lost** the duel.
+- Loser-token holders can **claim mercy**: they send their loser tokens and receive **winner tokens** from the mercy vault **without paying any SOL** (only gas for the transaction). So they **migrate to the better-performing asset** at a fixed, on-chain rate.
+- **Remaining tokens** still in the loser’s bonding curve are **burned**. The loser token is done; value has moved to the winner and to mercy claims.
+
+So: one token wins and gets more liquidity; the other “loses” but its holders can **claim winner exposure** (mercy) instead of being left with a dead token.
+
+---
+
+## Why it matters for you
+
+- **If your token wins the duel** — Its bonding curve gets the loser’s SOL. More liquidity, higher market cap potential, and your position benefits from the boost.
+- **If your token loses** — You’re not stuck. **Claim mercy** to swap your loser tokens for **winner tokens** (no extra SOL, just gas). You end up holding the better-performing asset.
+
+That creates a **survival-of-the-fittest** environment: permissionless and fully on-chain. You can invest in any token; if it loses a duel, you can **always migrate to the winner** via mercy. If you’re already on the winner, you keep benefiting from the boosted curve.
+
+**When a bonding curve sells out**, the token **graduates** to **PumpSwap**: it gets a normal liquidity pool and **leaves the duel system forever**. No more duels for that token.
+
+---
+
+## In short
+
+Apyx is a memecoin launchpad where tokens duel automatically and permissionlessly. The winner absorbs the loser’s liquidity; loser holders can claim winner tokens (mercy) for free (except gas). It’s an on-chain, programmatic “survival of the fittest” for memecoins—and you can always move to the better asset by claiming mercy or by holding the winner.
 
 <Card title="How duels work" icon="scale-balanced" href="/how-duels-work" horizontal>
-  Permissionless matching and verifiable resolution—no one picks pairs or outcomes.
+  No one picks pairs or outcomes—pairing and resolution are on-chain and verifiable.
 </Card>
 
 ---
 
-## The problem
+## Terminology
 
-- **Fragmented launches.** Many tokens, similar size, no way to surface which ones have real demand.
-- **No skin in the game.** Launch platforms don’t tie outcomes to measurable performance.
-- **Opaque or controllable “contests.”** If pairing or winners can be chosen off-chain, the game isn’t fair.
-
----
-
-## The solution
-
-1. **Bonding-curve launches** — Same primitive as Pump: buy/sell on a curve; market cap is derived from reserves.
-2. **Deterministic duels** — Pairing is **on-chain and rule-based**: same market-cap bucket + same time window + **match key = Blake3(mint, bucket, window)**. Collision = duel. No operator chooses who faces whom.
-3. **Clear win condition** — Target = 110% of the bucket’s reference mcap. When any trade pushes either token’s mcap past that, the program resolves: **higher mcap wins**. Relayer only submits the tx; the program enforces the rule.
-4. **Mercy** — Losers don’t get zero. They get a **pro-rata claim on winner tokens** at the on-chain rate (loser SOL → winner tokens in the mercy vault). You’re “joining the winner” at a fixed, verifiable conversion.
-
----
-
-## In one sentence
-
-**Apyx turns token launches into verifiable, permissionless duels: pairing and winners are determined by on-chain rules (bucket + window + hash collision; higher mcap wins), and loser holders can claim winner exposure via mercy.**
-
-<Card title="Quickstart" icon="rocket" href="/quickstart" horizontal>
-  Run the docs locally or jump into the repo.
-</Card>
+| Term | Meaning |
+|------|--------|
+| **Duel** | A head-to-head between two tokens in the same bucket and window. First to reach the target market cap triggers resolution; the token with the **higher market cap** wins. |
+| **Token** | A memecoin launched on Apyx. It has a bonding curve and can enter duels until it graduates. |
+| **Bonding curve** | The pool where your token is traded before graduation. You buy with SOL and get tokens; you sell tokens and get SOL. Price and market cap are derived from the curve’s reserves. |
+| **Mercy tokens** | Winner tokens that are sent to a **mercy vault** when a duel resolves. Only holders of the **loser** token can claim them (by sending loser tokens and receiving winner tokens pro-rata). Also called “winner tokens” in the context of mercy. |
+| **PumpSwap** | A DEX on Solana. When your token **graduates**, a PumpSwap pool is created and the token is traded there instead of on the bonding curve. |
+| **Loser token** | The token that had the **lower** market cap when the duel resolved. Its SOL is moved to the winner; its holders can claim mercy (winner tokens). |
+| **Winner token** | The token that had the **higher** market cap when the duel resolved. It receives the loser’s SOL and the mercy vault is filled with winner tokens for loser holders to claim. |
+| **Window** | A time slice (based on Solana **slots**). Tokens in the same **bucket** and same **window** can be paired into a duel if their **match key** collides. |
+| **Slot** | A unit of time on Solana. Windows are made of slots (e.g. window = slot range). |
+| **Bucket** | A market-cap range. Tokens in similar market-cap ranges fall into the same bucket. Duels only happen between tokens in the **same bucket** and **same window**. |

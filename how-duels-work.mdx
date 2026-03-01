@@ -7,11 +7,11 @@ description: "Permissionless matching and verifiable resolution"
 
 Pairing is **deterministic and on-chain**:
 
-1. **Bucket** — Your token’s market cap maps to a band (e.g. 30 SOL → 800 SOL in steps). Same formula for everyone; no manual buckets.
+1. **Bucket** — Your token’s market cap maps to a bucket (e.g. 30 SOL → 800 SOL in steps). Same formula for everyone; no manual buckets.
 2. **Window** — Time is split into slots (e.g. slot / window_size). Everyone in the same slot shares the same window.
 3. **Match key** — `Blake3(mint || bucket || window) % match_key_space`. Two tokens in the **same bucket** and **same window** that **collide** in this key space form a duel.
 
-So: **who you’re paired with is fixed by (mcap band, time window, and the hash of your mint).** No backend, no relayer, no admin chooses “Token A vs Token B.” If two tokens land in the same (bucket, window, match_key), they duel; otherwise they don’t.
+So: **who you’re paired with is fixed by (mcap bucket, time window, and the hash of your mint).** No backend, no relayer, no admin chooses “Token A vs Token B.” If two tokens land in the same (bucket, window, match_key), they duel; otherwise they don’t.
 
 ---
 
