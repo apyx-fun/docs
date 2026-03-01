@@ -1,0 +1,38 @@
+---
+title: "How duels work"
+description: "Permissionless matching and verifiable resolution"
+---
+
+## No one chooses pairs
+
+Pairing is **deterministic and on-chain**:
+
+1. **Bucket** — Your token’s market cap maps to a band (e.g. 30 SOL → 800 SOL in steps). Same formula for everyone; no manual buckets.
+2. **Window** — Time is split into slots (e.g. slot / window_size). Everyone in the same slot shares the same window.
+3. **Match key** — `Blake3(mint || bucket || window) % match_key_space`. Two tokens in the **same bucket** and **same window** that **collide** in this key space form a duel.
+
+So: **who you’re paired with is fixed by (mcap band, time window, and the hash of your mint).** No backend, no relayer, no admin chooses “Token A vs Token B.” If two tokens land in the same (bucket, window, match_key), they duel; otherwise they don’t.
+
+---
+
+## No one chooses the winner
+
+Resolution is **rule-based and checked on-chain**:
+
+- When a duel is **matched**, a **target market cap** is set (e.g. 110% of the bucket’s reference).
+- When **any buy or sell** causes either token’s **post-trade market cap ≥ target**, the duel can be resolved.
+- The program **requires**: `winner_mcap >= target` or `loser_mcap >= target`, and **`winner_mcap >= loser_mcap`**. So the “winner” is always the token with the **higher market cap at resolution**. The relayer only submits the tx; it cannot assign a different winner—the program rejects it.
+
+You can **verify** every duel by reading chain state: same (bucket, window, match_key) → same duel PDA; resolution only succeeds when target is reached and the higher-mcap mint is passed as winner.
+
+---
+
+## What you can trust
+
+| Concern | How it’s handled |
+|--------|-------------------|
+| Who gets paired? | Derived from mcap (bucket), slot (window), and Blake3(mint, bucket, window). No off-chain pairing. |
+| Who wins? | Program enforces: target reached and winner_mcap ≥ loser_mcap. Relayer can’t flip the outcome. |
+| Mercy rate? | On-chain: loser SOL → winner tokens into mercy vault; claim = (vault × your loser share) / snapshot. |
+
+So: **permissionless** (anyone can launch and trade; matching is automatic) and **verifiable** (pairing and resolution follow public, on-chain rules—no party can control which tokens duel or which token wins).

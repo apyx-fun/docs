@@ -1,97 +1,39 @@
 ---
 title: "Introduction"
-description: "Welcome to the new home for your documentation"
+description: "What Apyx is and why it exists"
 ---
 
-## Setting up
+## What is Apyx?
 
-Get your documentation site up and running in minutes.
+Apyx is a **permissionless token launch layer** on Solana. Tokens launch on bonding curves (Pump-style). When two tokens land in the same market-cap band and time window, they **duel**: first to reach a target market cap triggers resolution; the **higher market cap wins**. The loser’s SOL (minus a protocol fee) moves to the winner’s curve and is converted into winner tokens for a **mercy vault**. Loser-token holders can **claim mercy**—send loser tokens in, receive winner tokens pro-rata. So value is reallocated to the winner instead of being wiped.
 
-<Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
+<Card title="How duels work" icon="scale-balanced" href="/how-duels-work" horizontal>
+  Permissionless matching and verifiable resolution—no one picks pairs or outcomes.
 </Card>
 
-## Make it yours
+---
 
-Design a docs site that looks great and empowers your users.
+## The problem
 
-<Columns cols={2}>
-  <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
-  >
-    Edit your docs locally and preview them in real time.
-  </Card>
-  <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
-  >
-    Customize the design and colors of your site to match your brand.
-  </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
-  </Card>
-  <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
-  >
-    Auto-generate API documentation from OpenAPI specifications.
-  </Card>
-</Columns>
+- **Fragmented launches.** Many tokens, similar size, no way to surface which ones have real demand.
+- **No skin in the game.** Launch platforms don’t tie outcomes to measurable performance.
+- **Opaque or controllable “contests.”** If pairing or winners can be chosen off-chain, the game isn’t fair.
 
-## Create beautiful pages
+---
 
-Everything you need to create world-class documentation.
+## The solution
 
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
-  </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
+1. **Bonding-curve launches** — Same primitive as Pump: buy/sell on a curve; market cap is derived from reserves.
+2. **Deterministic duels** — Pairing is **on-chain and rule-based**: same market-cap bucket + same time window + **match key = Blake3(mint, bucket, window)**. Collision = duel. No operator chooses who faces whom.
+3. **Clear win condition** — Target = 110% of the bucket’s reference mcap. When any trade pushes either token’s mcap past that, the program resolves: **higher mcap wins**. Relayer only submits the tx; the program enforces the rule.
+4. **Mercy** — Losers don’t get zero. They get a **pro-rata claim on winner tokens** at the on-chain rate (loser SOL → winner tokens in the mercy vault). You’re “joining the winner” at a fixed, verifiable conversion.
 
-## Need inspiration?
+---
 
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
+## In one sentence
+
+**Apyx turns token launches into verifiable, permissionless duels: pairing and winners are determined by on-chain rules (bucket + window + hash collision; higher mcap wins), and loser holders can claim winner exposure via mercy.**
+
+<Card title="Quickstart" icon="rocket" href="/quickstart" horizontal>
+  Run the docs locally or jump into the repo.
 </Card>
