@@ -34,7 +34,7 @@
     "primary": {
       "type": "button",
       "label": "App",
-      "href": "#"
+      "href": "/"
     }
   },
   "footer": {
