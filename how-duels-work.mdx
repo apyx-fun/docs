@@ -33,6 +33,6 @@ You can **verify** every duel by reading chain state: same (bucket, window, matc
 |--------|-------------------|
 | Who gets paired? | Derived from mcap (bucket), slot (window), and Blake3(mint, bucket, window). No off-chain pairing. |
 | Who wins? | Program enforces: target reached and winner_mcap ≥ loser_mcap. Relayer can’t flip the outcome. |
-| Mercy rate? | On-chain: loser SOL → winner tokens into mercy vault; claim = (vault × your loser share) / snapshot. |
+| Mercy rate? | On-chain: loser SOL → winner tokens into mercy vault. Your claim = (vault balance × your loser token balance) / total loser tokens in circulation when the duel resolved. |
 
 So: **permissionless** (anyone can launch and trade; matching is automatic) and **verifiable** (pairing and resolution follow public, on-chain rules—no party can control which tokens duel or which token wins).

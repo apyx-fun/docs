@@ -1,0 +1,170 @@
+---
+title: "SDK"
+description: "Install and use the Apyx TypeScript SDK"
+---
+
+## Install
+
+From your project directory:
+
+```bash
+npm install @apyxfun/sdk
+```
+
+The SDK depends on **@coral-xyz/anchor** and **@solana/web3.js**. If your app already uses Solana or Anchor, those are likely installed. Otherwise add them:
+
+```bash
+npm install @coral-xyz/anchor @solana/web3.js
+```
+
+---
+
+## Create a client
+
+You need a Solana **connection** (and, for sending transactions, a **wallet/provider**).
+
+**Read-only client** (fetch accounts, token info, build unsigned transactions):
+
+```ts
+import { Connection } from "@solana/web3.js";
+import { ApyxClient } from "@apyxfun/sdk";
+
+const connection = new Connection("https://api.mainnet-beta.solana.com");
+const client = ApyxClient.fromConnection(connection);
+```
+
+**Full client** (for signing and sending transactions, use an Anchor **Provider** with a wallet):
+
+```ts
+import { Connection, Keypair } from "@solana/web3.js";
+import { AnchorProvider, Program } from "@coral-xyz/anchor";
+import { ApyxClient } from "@apyxfun/sdk";
+
+const connection = new Connection("https://api.mainnet-beta.solana.com");
+const wallet = /* your wallet, e.g. Keypair or WalletAdapter */;
+const provider = new AnchorProvider(connection, wallet, { commitment: "confirmed" });
+const client = new ApyxClient(provider);
+```
+
+---
+
+## Common usage
+
+### Get token info
+
+Fetch price, market cap, reserves, and whether the token has graduated:
+
+```ts
+import { PublicKey } from "@solana/web3.js";
+
+const mint = new PublicKey("YourTokenMintAddress...");
+const info = await client.getTokenInfo(mint);
+
+console.log(info.marketCap);        // market cap (lamports)
+console.log(info.price.perTokenSol); // price in SOL
+console.log(info.graduated);         // true if on PumpSwap
+```
+
+### Buy tokens
+
+Build a buy transaction (exact SOL in). The SDK returns a **base64-encoded transaction** for your wallet to sign and send:
+
+```ts
+import { BN } from "@coral-xyz/anchor";
+
+const result = await client.buy(wallet.publicKey, {
+  mint: new PublicKey("TokenMintAddress..."),
+  solAmount: new BN(1_000_000_000), // 1 SOL in lamports
+  minTokensOut: new BN(0),          // slippage: minimum tokens out (use quotes for safety)
+});
+
+// Send result.transaction with your wallet (e.g. sendVersionedTransaction)
+```
+
+For **graduated** tokens, the SDK routes the buy through PumpSwap; you can pass `poolIndex` and `poolCreator` if needed.
+
+### Sell tokens
+
+```ts
+const result = await client.sell(wallet.publicKey, {
+  mint: new PublicKey("TokenMintAddress..."),
+  tokenAmount: new BN(1_000_000),   // token amount (6 decimals typical)
+  minSolOut: new BN(0),             // slippage: minimum SOL out
+});
+```
+
+### Launch a token
+
+Build a **launch_token** transaction. You need a mint keypair, metadata (name, symbol, URI), and creator pubkey:
+
+```ts
+import { Keypair } from "@solana/web3.js";
+
+const mintKeypair = Keypair.generate(); // or use a vanity mint
+
+const result = await client.launchToken(wallet.publicKey, {
+  mintKeypair,
+  name: "My Token",
+  symbol: "MTK",
+  uri: "https://your-metadata.json",
+  creator: wallet.publicKey,
+});
+
+// Sign and send result.transaction (user + mint keypair must sign)
+```
+
+### Claim mercy
+
+If you held the **loser** token in a resolved duel, you can claim **winner tokens** from the mercy vault. Build the transaction with the SDK, then sign and send with your wallet:
+
+```ts
+const result = await client.buildClaimMercyTx({
+  user: wallet.publicKey,
+  loserMint: new PublicKey("LoserTokenMint..."),
+  winnerMint: new PublicKey("WinnerTokenMint..."),
+  duel: new PublicKey("DuelAccountPda..."),
+});
+
+// Sign and send result.transaction
+```
+
+### Claim creator rewards
+
+As a token creator, claim accumulated SOL from your creator vault:
+
+```ts
+const result = await client.buildClaimCreatorRewardsTx({
+  creator: wallet.publicKey,
+  bondingCurve: new PublicKey("BondingCurvePda..."),
+});
+
+// Sign and send result.transaction
+```
+
+### Fetch bonding curve and duels
+
+```ts
+const bondingCurve = await client.getBondingCurve(mint);
+const duel = await client.getDuelForToken(mint);  // active duel, or null
+const config = await client.getConfig();         // protocol config
+```
+
+---
+
+## Helpers and PDAs
+
+The SDK exports **PDA helpers** and **quote helpers** so you can derive addresses and compute prices without sending transactions:
+
+```ts
+import {
+  deriveBondingCurvePda,
+  deriveDuelPda,
+  getTokenPrice,
+  getMarketCap,
+  mcapToBucket,
+  currentWindow,
+  deriveMatchKey,
+} from "@apyxfun/sdk";
+```
+
+For full program IDs, account layouts, and event types, use the exported **IDL** and **types** from `@apyxfun/sdk`.
