@@ -9,7 +9,7 @@ Apyx is a **memecoin launchpad** on Solana. You launch and trade tokens on **bon
 
 - The **winner** gets a boost: the **loser’s SOL liquidity** (from the loser’s bonding curve) is moved to the winner’s curve.
 - That SOL is used to **buy winner tokens** and put them in a **mercy vault**. Those are **mercy tokens** — available **only** to holders of the token that **lost** the duel.
-- Loser-token holders can **claim mercy**: they send their loser tokens and receive **winner tokens** from the mercy vault **without paying any SOL** (only gas for the transaction). So they **migrate to the better-performing asset** at a fixed, on-chain rate.
+- Loser-token holders can **claim mercy**: they receive **winner tokens** from the mercy vault **without paying any SOL** (only gas for the transaction). So they **migrate to the better-performing asset** at a fixed, on-chain rate.
 - **Remaining tokens** still in the loser’s bonding curve are **burned**. The loser token is done; value has moved to the winner and to mercy claims.
 
 So: one token wins and gets more liquidity; the other “loses” but its holders can **claim winner exposure** (mercy) instead of being left with a dead token.
@@ -44,7 +44,7 @@ Apyx is a memecoin launchpad where tokens duel automatically and permissionlessl
 | **Duel** | A head-to-head between two tokens in the same bucket and window. First to reach the target market cap triggers resolution; the token with the **higher market cap** wins. |
 | **Token** | A memecoin launched on Apyx. It has a bonding curve and can enter duels until it graduates. |
 | **Bonding curve** | The pool where your token is traded before graduation. You buy with SOL and get tokens; you sell tokens and get SOL. Price and market cap are derived from the curve’s reserves. |
-| **Mercy tokens** | Winner tokens that are sent to a **mercy vault** when a duel resolves. Only holders of the **loser** token can claim them (by sending loser tokens and receiving winner tokens pro-rata). Also called “winner tokens” in the context of mercy. |
+| **Mercy tokens** | Winner tokens that are sent to a **mercy vault** when a duel resolves. Only holders of the **loser** token can claim them (receiving winner tokens pro-rata). Also called “winner tokens” in the context of mercy. |
 | **PumpSwap** | A DEX on Solana. When your token **graduates**, a PumpSwap pool is created and the token is traded there instead of on the bonding curve. |
 | **Loser token** | The token that had the **lower** market cap when the duel resolved. Its SOL is moved to the winner; its holders can claim mercy (winner tokens). |
 | **Winner token** | The token that had the **higher** market cap when the duel resolved. It receives the loser’s SOL and the mercy vault is filled with winner tokens for loser holders to claim. |

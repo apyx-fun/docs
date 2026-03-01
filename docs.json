@@ -25,7 +25,7 @@
         "groups": [
           {
             "group": "Overview",
-            "pages": ["index", "how-duels-work", "creator-rewards", "pumpswap-graduation"]
+            "pages": ["index", "how-duels-work", "fees", "creator-rewards", "pumpswap-graduation"]
           }
         ]
       }

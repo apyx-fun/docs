@@ -1,0 +1,37 @@
+---
+title: "Fees"
+description: "Creator, protocol, duel resolution, and graduation fees on Apyx"
+---
+
+## Fee overview
+
+| Fee | Rate |
+|-----|------|
+| **Trade creator fees** | 0.5% |
+| **Trade protocol fees** | 0% |
+| **Duel resolution fees** | 5% of the loser’s SOL reserves |
+| **Migration to PumpSwap** | 6 SOL fixed |
+
+---
+
+## Trade creator fees — 0.5%
+
+When someone **buys** your token on the bonding curve, **0.5% of the trade** is taken as a creator fee and sent (in SOL) to your creator vault. Sells do not pay a creator fee. You can claim from your profile page when logged in with the wallet you used to launch the token.
+
+---
+
+## Trade protocol fees — 0%
+
+There is **no protocol fee** on buys or sells. Only the creator fee applies on buys.
+
+---
+
+## Duel resolution fees — 5%
+
+When a duel resolves, **5% of the loser’s SOL reserves** (the SOL in the loser token’s bonding curve) is taken as a protocol fee. The rest of the loser’s SOL is moved to the winner’s curve and used to buy winner tokens for the mercy vault. So the loser’s curve is drained; 5% goes to the protocol, the remainder funds the winner and mercy.
+
+---
+
+## Migration to PumpSwap — 6 SOL fixed
+
+When a token **graduates** (bonding curve sells out), a **fixed 6 SOL** graduation fee is paid from the curve’s SOL to the protocol before the rest is used to create the PumpSwap pool. So the pool is funded with (curve SOL − 6 SOL).
