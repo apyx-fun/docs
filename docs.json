@@ -17,7 +17,7 @@
   "appearance": {
     "defaultTheme": "dark"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/favicon.ico",
   "navigation": {
     "tabs": [
       {
