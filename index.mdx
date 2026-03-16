@@ -1,11 +1,11 @@
 ---
 title: "Overview"
-description: "Apyx — memecoin launchpad with permissionless duels and mercy"
+description: "Ate — memecoin launchpad with permissionless duels and mercy"
 ---
 
-## What is Apyx?
+## What is Ate?
 
-Apyx is a **memecoin launchpad** on Solana. You launch and trade tokens on **bonding curves**. Here’s the twist: tokens **automatically and permissionlessly** enter **duels** with other tokens in the same **bucket** and **window**. When a duel resolves, the **two coins effectively merge into the winner**.
+Ate is a **memecoin launchpad** on Solana. You launch and trade tokens on **bonding curves**. Here’s the twist: tokens **automatically and permissionlessly** enter **duels** with other tokens in the same **bucket** and **window**. When a duel resolves, the **two coins effectively merge into the winner**.
 
 - The **winner** gets a boost: the **loser’s SOL liquidity** (from the loser’s bonding curve) is moved to the winner’s curve.
 - That SOL is used to **buy winner tokens** and put them in a **mercy vault**. Those are **mercy tokens** — available **only** to holders of the token that **lost** the duel.
@@ -29,7 +29,7 @@ That creates a **survival-of-the-fittest** environment: permissionless and fully
 
 ## In short
 
-Apyx is a memecoin launchpad where tokens duel automatically and permissionlessly. The winner absorbs the loser’s liquidity; loser holders can claim winner tokens (mercy) for free (except gas). It’s an on-chain, programmatic “survival of the fittest” for memecoins—and you can always move to the better asset by claiming mercy or by holding the winner.
+Ate is a memecoin launchpad where tokens duel automatically and permissionlessly. The winner absorbs the loser’s liquidity; loser holders can claim winner tokens (mercy) for free (except gas). It’s an on-chain, programmatic “survival of the fittest” for memecoins—and you can always move to the better asset by claiming mercy or by holding the winner.
 
 <Card title="How duels work" icon="scale-balanced" href="/how-duels-work" horizontal>
   No one picks pairs or outcomes—pairing and resolution are on-chain and verifiable.
@@ -42,7 +42,7 @@ Apyx is a memecoin launchpad where tokens duel automatically and permissionlessl
 | Term | Meaning |
 |------|--------|
 | **Duel** | A head-to-head between two tokens in the same bucket and window. First to reach the target market cap triggers resolution; the token with the **higher market cap** wins. |
-| **Token** | A memecoin launched on Apyx. It has a bonding curve and can enter duels until it graduates. |
+| **Token** | A memecoin launched on Ate. It has a bonding curve and can enter duels until it graduates. |
 | **Bonding curve** | The pool where your token is traded before graduation. You buy with SOL and get tokens; you sell tokens and get SOL. Price and market cap are derived from the curve’s reserves. |
 | **Mercy tokens** | Winner tokens that are sent to a **mercy vault** when a duel resolves. Only holders of the **loser** token can claim them (receiving winner tokens pro-rata). Also called “winner tokens” in the context of mercy. |
 | **PumpSwap** | A DEX on Solana. When your token **graduates**, a PumpSwap pool is created and the token is traded there instead of on the bonding curve. |

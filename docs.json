@@ -1,8 +1,8 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Apyx",
-  "description": "Technical architecture and how Apyx works",
+  "name": "Ate",
+  "description": "Technical architecture and how Ate works",
   "colors": {
     "primary": "#74C27B",
     "light": "#74C27B",
@@ -43,7 +43,7 @@
     "primary": {
       "type": "button",
       "label": "Trade Now",
-      "href": "https://apyx.fun"
+      "href": "https://ate.fun"
     }
   },
   "footer": {

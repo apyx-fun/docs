@@ -1,6 +1,6 @@
 ---
 title: "SDK"
-description: "Install and use the Apyx TypeScript SDK"
+description: "Install and use the Ate TypeScript SDK"
 ---
 
 ## Install
@@ -8,7 +8,7 @@ description: "Install and use the Apyx TypeScript SDK"
 From your project directory:
 
 ```bash
-npm install @apyxfun/sdk
+npm install @atefun/sdk
 ```
 
 The SDK depends on **@coral-xyz/anchor** and **@solana/web3.js**. If your app already uses Solana or Anchor, those are likely installed. Otherwise add them:
@@ -27,10 +27,10 @@ You need a Solana **connection** (and, for sending transactions, a **wallet/prov
 
 ```ts
 import { Connection } from "@solana/web3.js";
-import { ApyxClient } from "@apyxfun/sdk";
+import { AteClient } from "@atefun/sdk";
 
 const connection = new Connection("https://api.mainnet-beta.solana.com");
-const client = ApyxClient.fromConnection(connection);
+const client = AteClient.fromConnection(connection);
 ```
 
 **Full client** (for signing and sending transactions, use an Anchor **Provider** with a wallet):
@@ -38,12 +38,12 @@ const client = ApyxClient.fromConnection(connection);
 ```ts
 import { Connection, Keypair } from "@solana/web3.js";
 import { AnchorProvider, Program } from "@coral-xyz/anchor";
-import { ApyxClient } from "@apyxfun/sdk";
+import { AteClient } from "@atefun/sdk";
 
 const connection = new Connection("https://api.mainnet-beta.solana.com");
 const wallet = /* your wallet, e.g. Keypair or WalletAdapter */;
 const provider = new AnchorProvider(connection, wallet, { commitment: "confirmed" });
-const client = new ApyxClient(provider);
+const client = new AteClient(provider);
 ```
 
 ---
@@ -164,7 +164,7 @@ import {
   mcapToBucket,
   currentWindow,
   deriveMatchKey,
-} from "@apyxfun/sdk";
+} from "@atefun/sdk";
 ```
 
-For full program IDs, account layouts, and event types, use the exported **IDL** and **types** from `@apyxfun/sdk`.
+For full program IDs, account layouts, and event types, use the exported **IDL** and **types** from `@atefun/sdk`.
